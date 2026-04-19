@@ -253,7 +253,7 @@
         .category-item {
             background: #F0F0F0;
             border-radius: 12px;
-            padding: 14px 20px;
+            padding: 28px 20px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -509,7 +509,7 @@
         #modal-categories-container .category-item {
             background: #F0F0F0;
             border-radius: 12px;
-            padding: 18px 16px;
+            padding: 30px 16px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -719,6 +719,17 @@
 
         .all-categories-section {
             display: none;
+        }
+
+        /* Remove number input spinner arrows */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -1017,8 +1028,8 @@
             </div>
 
             <div class="mode-switcher">
-                <button class="mode-option active" id="youth-mode" onclick="switchMode('youth')" data-tooltip="Youth card 💳">🎓</button>
-                <button class="mode-option" id="business-mode" onclick="switchMode('business')" data-tooltip="Business card 💳">💼</button>
+                <button class="mode-option active" id="youth-mode" onclick="switchMode('youth')" data-tooltip="Youth card  💳">🎓</button>
+                <button class="mode-option" id="business-mode" onclick="switchMode('business')" data-tooltip="Business card  💳">💼</button>
             </div>
         </div>
 
