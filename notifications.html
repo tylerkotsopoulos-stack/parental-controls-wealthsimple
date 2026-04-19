@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Wealthsimple</title>
+    <style>
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .phone-frame {
+            width: 393px;
+            height: 852px;
+            background: #fff;
+            border-radius: 47px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            height: 54px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+            flex-shrink: 0;
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 120px;
+            background: #fff;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 16px;
+            margin-left: 0;
+            text-decoration: none;
+            color: #32302f;
+            padding: 0;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #32302f;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        @keyframes cardBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        .notification-card {
+            background: #F5F5F5;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .notification-card.bounce {
+            animation: cardBounce 0.4s cubic-bezier(0.34, 1.45, 0.64, 1);
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 51px;
+            height: 31px;
+            background: #D1D1D6;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch.active {
+            background: #52A05C;
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 27px;
+            height: 27px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-knob::after {
+            content: '';
+            width: 14px;
+            height: 14px;
+            background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.6666 3.5L5.24992 9.91667L2.33325 7' stroke='%2352A05C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(20px);
+        }
+
+        .toggle-switch.active .toggle-knob::after {
+            opacity: 1;
+        }
+
+        .amount-field {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 1px solid transparent;
+            transform: translateY(-8px);
+            transition: max-height 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        opacity 0.3s ease-out,
+                        margin-top 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        padding-top 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        transform 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        border-color 0.3s ease-out;
+        }
+
+        .amount-field.visible {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top-color: #E5E5E5;
+            transform: translateY(0);
+        }
+
+        .amount-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .amount-input-container {
+            position: relative;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 12px 16px 12px 28px;
+            border: 1px solid #D1D1D6;
+            border-radius: 8px;
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            background: #fff;
+            color: #32302f;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: #32302f;
+        }
+
+        .dollar-sign {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .save-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            display: flex;
+            min-width: 120px;
+            min-height: 60px;
+            padding: 16px 24px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            width: 353px;
+            border-radius: 1000px;
+            border: 1px solid #000;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.00) 100%), #000;
+            color: #ffffff;
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .save-button.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .save-button.visible {
+            display: block;
+        }
+
+        .save-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: #32302f;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <rect x="0" y="8" width="3" height="4" rx="1" fill="#32302f"/>
+                    <rect x="4.5" y="6" width="3" height="6" rx="1" fill="#32302f"/>
+                    <rect x="9" y="4" width="3" height="8" rx="1" fill="#32302f"/>
+                    <rect x="13.5" y="2" width="3" height="10" rx="1" fill="#32302f"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C5.2 1 2.7 2.1 1 4L2.5 5.5C3.9 4.1 5.8 3.3 8 3.3C10.2 3.3 12.1 4.1 13.5 5.5L15 4C13.3 2.1 10.8 1 8 1ZM8 5.5C6.5 5.5 5.2 6.1 4.3 7L5.8 8.5C6.3 8 7.1 7.7 8 7.7C8.9 7.7 9.7 8 10.2 8.5L11.7 7C10.8 6.1 9.5 5.5 8 5.5ZM9.5 10.5C9.5 11.3 8.8 12 8 12C7.2 12 6.5 11.3 6.5 10.5C6.5 9.7 7.2 9 8 9C8.8 9 9.5 9.7 9.5 10.5Z" fill="#32302f"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="#32302f" stroke-opacity="0.4"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1.5" fill="#32302f"/>
+                    <rect x="23" y="3.5" width="1.5" height="5" rx="0.75" fill="#32302f" fill-opacity="0.4"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="content">
+            <a href="index.html" class="back-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L11 18M5 12L11 6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <h1 class="page-title">Notifications</h1>
+            <p class="page-subtitle">Send me a notification if...</p>
+
+            <div class="notification-card">
+                <div class="notification-header">
+                    <div class="notification-label">A purchase is made</div>
+                    <div class="toggle-switch" id="purchase-toggle" onclick="toggleNotification('purchase')">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-header">
+                    <div class="notification-label">A purchase exceeds an amount</div>
+                    <div class="toggle-switch" id="purchase-exceeds-toggle" onclick="toggleNotification('purchase-exceeds')">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <div class="amount-field" id="purchase-exceeds-field">
+                    <div class="amount-label">Amount</div>
+                    <div class="amount-input-container">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" class="amount-input" id="purchase-exceeds-amount"
+                               placeholder="50.00" step="0.01" min="0" value="50.00">
+                    </div>
+                </div>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-header">
+                    <div class="notification-label">Weekly spend exceeds an amount</div>
+                    <div class="toggle-switch" id="weekly-toggle" onclick="toggleNotification('weekly')">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <div class="amount-field" id="weekly-field">
+                    <div class="amount-label">Amount</div>
+                    <div class="amount-input-container">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" class="amount-input" id="weekly-amount"
+                               placeholder="50.00" step="0.01" min="0" value="50.00">
+                    </div>
+                </div>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-header">
+                    <div class="notification-label">Monthly spend exceeds an amount</div>
+                    <div class="toggle-switch" id="monthly-toggle" onclick="toggleNotification('monthly')">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <div class="amount-field" id="monthly-field">
+                    <div class="amount-label">Amount</div>
+                    <div class="amount-input-container">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" class="amount-input" id="monthly-amount"
+                               placeholder="50.00" step="0.01" min="0" value="50.00">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="save-button" id="save-button" onclick="saveNotifications()">Save</button>
+        <div class="home-indicator"></div>
+    </div>
+
+    <script>
+        const state = {
+            purchase: { active: false },
+            'purchase-exceeds': { active: false, amount: 50 },
+            weekly: { active: false, amount: 50 },
+            monthly: { active: false, amount: 50 }
+        };
+
+        let initialState = {};
+
+        function loadState() {
+            const saved = localStorage.getItem('notifications');
+            if (saved) {
+                Object.assign(state, JSON.parse(saved));
+            }
+            // Save initial state for comparison
+            initialState = JSON.parse(JSON.stringify(state));
+            updateUI();
+        }
+
+        function toggleNotification(type) {
+            state[type].active = !state[type].active;
+            updateUI();
+            checkForChanges();
+
+            // Add bounce animation only for notifications without expanding fields
+            if (type === 'purchase') {
+                const toggle = document.getElementById(`${type}-toggle`);
+                const card = toggle.closest('.notification-card');
+                card.classList.add('bounce');
+                setTimeout(() => {
+                    card.classList.remove('bounce');
+                }, 400);
+            }
+        }
+
+        function updateUI() {
+            Object.keys(state).forEach(type => {
+                const toggle = document.getElementById(`${type}-toggle`);
+                const field = document.getElementById(`${type}-field`);
+
+                if (state[type].active) {
+                    toggle.classList.add('active');
+                    if (field) field.classList.add('visible');
+                } else {
+                    toggle.classList.remove('active');
+                    if (field) field.classList.remove('visible');
+                }
+            });
+        }
+
+        function checkForChanges() {
+            // Check if current state differs from initial state
+            const hasChanges = JSON.stringify(state) !== JSON.stringify(initialState);
+            document.getElementById('save-button').classList.toggle('visible', hasChanges);
+        }
+
+        function saveNotifications() {
+            ['purchase-exceeds', 'weekly', 'monthly'].forEach(type => {
+                const input = document.getElementById(`${type}-amount`);
+                if (input) {
+                    state[type].amount = parseFloat(input.value) || 50;
+                }
+            });
+
+            localStorage.setItem('notifications', JSON.stringify(state));
+            window.location.href = 'index.html';
+        }
+
+        // Add input listeners to detect amount changes
+        document.addEventListener('DOMContentLoaded', function() {
+            ['purchase-exceeds', 'weekly', 'monthly'].forEach(type => {
+                const input = document.getElementById(`${type}-amount`);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        state[type].amount = parseFloat(input.value) || 50;
+                        checkForChanges();
+                    });
+                }
+            });
+        });
+
+        loadState();
+    </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parental Controls - Wealthsimple</title>
+    <style>
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Wealthsimple Sans';
+            src: url('Wealthsimple-Sans-Display-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .phone-frame {
+            width: 393px;
+            height: 852px;
+            background: #fff;
+            border-radius: 47px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            height: 54px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+            flex-shrink: 0;
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .nav-header {
+            padding: 8px 20px 40px;
+            background: #fff;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: #32302f;
+            padding: 0;
+        }
+
+        .page-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #32302f;
+            letter-spacing: 0;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 40px;
+            background: #fff;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .menu-item {
+            background: #F5F5F5;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #32302f;
+            transition: transform 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-item:active {
+            transform: scale(0.98);
+            background: #ECECEC;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .menu-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .menu-content {
+            flex: 1;
+        }
+
+        .menu-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+        }
+
+        .menu-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-badge.on {
+            background: #E8F5EA;
+            color: #527E58;
+        }
+
+        .status-badge.off {
+            background: #EFEFEF;
+            color: #32302f;
+        }
+
+        .chevron {
+            font-size: 18px;
+            color: #999;
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: #32302f;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <rect x="0" y="8" width="3" height="4" rx="1" fill="#32302f"/>
+                    <rect x="4.5" y="6" width="3" height="6" rx="1" fill="#32302f"/>
+                    <rect x="9" y="4" width="3" height="8" rx="1" fill="#32302f"/>
+                    <rect x="13.5" y="2" width="3" height="10" rx="1" fill="#32302f"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C5.2 1 2.7 2.1 1 4L2.5 5.5C3.9 4.1 5.8 3.3 8 3.3C10.2 3.3 12.1 4.1 13.5 5.5L15 4C13.3 2.1 10.8 1 8 1ZM8 5.5C6.5 5.5 5.2 6.1 4.3 7L5.8 8.5C6.3 8 7.1 7.7 8 7.7C8.9 7.7 9.7 8 10.2 8.5L11.7 7C10.8 6.1 9.5 5.5 8 5.5ZM9.5 10.5C9.5 11.3 8.8 12 8 12C7.2 12 6.5 11.3 6.5 10.5C6.5 9.7 7.2 9 8 9C8.8 9 9.5 9.7 9.5 10.5Z" fill="#32302f"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="#32302f" stroke-opacity="0.4"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1.5" fill="#32302f"/>
+                    <rect x="23" y="3.5" width="1.5" height="5" rx="0.75" fill="#32302f" fill-opacity="0.4"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="nav-header">
+            <button class="back-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L11 18M5 12L11 6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <h1 class="page-title">Parental controls</h1>
+        </div>
+
+        <div class="content">
+
+            <a href="notifications.html" class="menu-item">
+                <div class="menu-icon">
+                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2c1.894 0 3.795.76 5.225 1.969 1.421 1.2 2.461 2.922 2.477 4.9l.063 1.877c.057 1.814.147 3.488.745 5.064l.631 1.236a1 1 0 0 1-.891 1.454h-4.283a4 4 0 0 1-7.935 0H3.75a1 1 0 0 1-.892-1.454l.631-1.236c.8-2.105.692-4.385.809-6.94.015-1.979 1.055-3.7 2.476-4.901C8.204 2.759 10.106 2 12 2Zm-1.935 16.5a1.999 1.999 0 0 0 3.87 0h-3.87ZM12 4c-1.38 0-2.833.565-3.935 1.496-1.1.93-1.768 2.15-1.768 3.418v.024l-.001.022c-.104 2.284.01 5.046-.93 7.54h13.268c-.941-2.494-.826-5.256-.93-7.54l-.001-.023v-.023c0-1.269-.668-2.488-1.769-3.418C14.832 4.565 13.38 4 12 4Z" fill="#32302f"/>
+                    </svg>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-label">Notifications</div>
+                </div>
+                <div class="menu-right">
+                    <span class="status-badge off" id="notifications-badge">Off</span>
+                    <span class="chevron">›</span>
+                </div>
+            </a>
+
+            <a href="spend-limits.html" class="menu-item">
+                <div class="menu-icon">
+                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5a1 1 0 0 1 1 1v.505c.265.005.506.014.724.032.478.04.933.125 1.365.345a3.5 3.5 0 0 1 1.53 1.53c.22.43.305.886.344 1.364C21 7.743 21 8.316 21 9v7c0 .684.001 1.257-.037 1.724-.04.478-.125.933-.345 1.365a3.5 3.5 0 0 1-1.53 1.53c-.43.22-.886.305-1.364.344C17.257 21 16.684 21 16 21H8c-.684 0-1.257.001-1.724-.037-.478-.04-.933-.125-1.365-.345a3.5 3.5 0 0 1-1.53-1.53c-.22-.43-.305-.886-.344-1.364C3 17.257 3 16.684 3 16V9c0-.684-.001-1.257.037-1.724.04-.478.125-.933.345-1.365a3.5 3.5 0 0 1 1.53-1.53c.43-.22.886-.305 1.364-.344.218-.018.46-.027.724-.032V3.5a1 1 0 0 1 2 0V4h6v-.5a1 1 0 0 1 1-1ZM5 11v5c0 .716 0 1.194.03 1.56.03.355.08.518.133.62.144.283.374.513.656.657.103.052.266.104.62.133.367.03.844.03 1.561.03h8c.716 0 1.194 0 1.56-.03.355-.03.518-.08.62-.133.283-.144.513-.374.657-.656.052-.103.104-.266.133-.62.03-.367.03-.845.03-1.561v-5H5Zm3-5c-.717 0-1.194 0-1.56.03-.355.03-.518.08-.62.133a1.503 1.503 0 0 0-.657.656c-.052.103-.104.266-.133.62C5 7.806 5 8.283 5 9h14c0-.717 0-1.194-.03-1.56-.03-.355-.08-.518-.133-.62a1.503 1.503 0 0 0-.656-.657c-.103-.052-.266-.104-.62-.133C17.194 6 16.716 6 16 6H8Z" fill="#32302f"/>
+                    </svg>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-label">Spend limits</div>
+                </div>
+                <div class="menu-right">
+                    <span class="status-badge off" id="spend-limits-badge">Off</span>
+                    <span class="chevron">›</span>
+                </div>
+            </a>
+
+            <a href="spend-restrictions.html" class="menu-item">
+                <div class="menu-icon">
+                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 7a1 1 0 0 1 1 1 4 4 0 0 1-8 0 1 1 0 0 1 2 0 2 2 0 0 0 4 0 1 1 0 0 1 1-1Z" fill="#32302f"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.242 3c.646 0 1.189-.001 1.633.034.456.037.89.116 1.307.319a3.5 3.5 0 0 1 1.516 1.423c.228.403.333.831.398 1.285.063.44.096.983.137 1.627l.5 8c.045.722.083 1.326.073 1.818-.01.503-.072.984-.282 1.445a3.5 3.5 0 0 1-1.537 1.637c-.447.238-.925.33-1.426.372-.49.041-1.095.04-1.819.04H8.258c-.723 0-1.328.001-1.818-.04-.502-.042-.98-.134-1.426-.372a3.5 3.5 0 0 1-1.537-1.637c-.21-.46-.272-.942-.282-1.445-.01-.492.028-1.096.073-1.818l.5-8c.04-.644.074-1.186.137-1.627.064-.454.17-.882.398-1.285a3.5 3.5 0 0 1 1.516-1.423c.416-.203.85-.283 1.306-.319C7.57 3 8.113 3 8.758 3h6.484ZM8.758 5c-.677 0-1.127 0-1.474.028-.334.027-.49.074-.591.123-.274.133-.5.346-.65.61-.055.098-.112.251-.159.583-.05.344-.078.793-.12 1.468l-.5 8c-.047.757-.079 1.263-.07 1.652.008.378.053.55.102.658.137.3.369.546.66.701.104.056.274.112.65.144.388.032.895.033 1.652.033h7.484c.758 0 1.264 0 1.652-.033.376-.032.547-.088.651-.144a1.5 1.5 0 0 0 .66-.7c.049-.109.094-.281.102-.66.008-.388-.023-.894-.07-1.65l-.5-8c-.043-.676-.071-1.125-.12-1.47-.048-.33-.105-.484-.16-.581a1.502 1.502 0 0 0-.65-.61c-.1-.05-.257-.097-.59-.124C16.368 5.001 15.92 5 15.241 5H8.758Z" fill="#32302f"/>
+                    </svg>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-label">Spend restrictions</div>
+                </div>
+                <div class="menu-right">
+                    <span class="status-badge on" id="restrictions-badge">On</span>
+                    <span class="chevron">›</span>
+                </div>
+            </a>
+
+            <a href="international-spending.html" class="menu-item">
+                <div class="menu-icon">
+                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2ZM9.523 13c.09 1.982.438 3.726.934 5.002.29.746.612 1.282.917 1.614.304.331.517.384.626.384.109 0 .322-.053.626-.384.305-.332.627-.868.917-1.614.496-1.276.845-3.02.934-5.002H9.523Zm-5.459 0a8.005 8.005 0 0 0 4.8 6.36 10.14 10.14 0 0 1-.271-.633C7.994 17.187 7.61 15.189 7.52 13H4.064Zm12.416 0c-.09 2.189-.474 4.187-1.073 5.727-.085.218-.175.43-.271.633a8.004 8.004 0 0 0 4.8-6.36H16.48ZM8.863 4.639A8.006 8.006 0 0 0 4.064 11h3.457c.09-2.189.473-4.187 1.072-5.727.085-.218.174-.43.27-.634ZM12 4c-.109 0-.322.053-.626.384-.305.332-.627.868-.917 1.614-.496 1.276-.844 3.02-.934 5.002h4.954c-.09-1.982-.438-3.726-.934-5.002-.29-.746-.612-1.282-.917-1.614C12.322 4.053 12.109 4 12 4Zm3.136.639c.096.204.186.416.271.634.599 1.54.982 3.538 1.073 5.727h3.456a8.005 8.005 0 0 0-4.8-6.361Z" fill="#32302f"/>
+                    </svg>
+                </div>
+                <div class="menu-content">
+                    <div class="menu-label">International spending</div>
+                </div>
+                <div class="menu-right">
+                    <span class="status-badge off" id="international-badge">Off</span>
+                    <span class="chevron">›</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="home-indicator"></div>
+    </div>
+
+    <script>
+        function setBadgeState(badgeId, isActive) {
+            const badge = document.getElementById(badgeId);
+            if (isActive) {
+                badge.textContent = 'On';
+                badge.classList.remove('off');
+                badge.classList.add('on');
+            } else {
+                badge.textContent = 'Off';
+                badge.classList.remove('on');
+                badge.classList.add('off');
+            }
+        }
+
+        function updateBadges() {
+            // Notifications
+            const notificationsRaw = localStorage.getItem('notifications');
+            let hasActiveNotification = false;
+            if (notificationsRaw) {
+                const notifications = JSON.parse(notificationsRaw);
+                hasActiveNotification = Object.values(notifications).some(n => n && n.active);
+            }
+            setBadgeState('notifications-badge', hasActiveNotification);
+
+            // Spend limits
+            const spendLimitsRaw = localStorage.getItem('spendLimits');
+            let hasActiveLimit = false;
+            if (spendLimitsRaw) {
+                const spendLimits = JSON.parse(spendLimitsRaw);
+                hasActiveLimit = Object.values(spendLimits).some(l => l && l.active);
+            }
+            setBadgeState('spend-limits-badge', hasActiveLimit);
+
+            // Restrictions - default to ON
+            const restrictionsRaw = localStorage.getItem('restrictions');
+            let hasActiveRestriction = true; // default ON
+            if (restrictionsRaw) {
+                const restrictions = JSON.parse(restrictionsRaw);
+                hasActiveRestriction = restrictions.restrictAll ||
+                    (restrictions.transactions && Object.values(restrictions.transactions).some(t => t)) ||
+                    (restrictions.categories && Object.values(restrictions.categories).some(c => c));
+            }
+            setBadgeState('restrictions-badge', hasActiveRestriction);
+
+            // International
+            const internationalRaw = localStorage.getItem('international');
+            let hasActiveInternational = false;
+            if (internationalRaw) {
+                const international = JSON.parse(internationalRaw);
+                hasActiveInternational = international.active;
+            }
+            setBadgeState('international-badge', hasActiveInternational);
+        }
+
+        updateBadges();
+        window.addEventListener('storage', updateBadges);
+        window.addEventListener('focus', updateBadges);
+    </script>
+</body>
+</html>
