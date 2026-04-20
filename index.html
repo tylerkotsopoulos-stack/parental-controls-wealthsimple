@@ -127,22 +127,26 @@
         }
 
         .menu-item {
-            background: #F5F5F5;
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
+            background: transparent;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 20px 0;
+            margin-bottom: 0;
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
             color: #32302f;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
             cursor: pointer;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
         }
 
         .menu-item:active {
             transform: scale(0.98);
-            background: #ECECEC;
+            opacity: 0.6;
         }
 
         .menu-icon {
@@ -178,8 +182,9 @@
         .status-badge {
             padding: 4px 10px;
             border-radius: 100px;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 500;
+            margin-right: 4px;
         }
 
         .status-badge.on {
@@ -190,11 +195,6 @@
         .status-badge.off {
             background: #EFEFEF;
             color: #32302f;
-        }
-
-        .chevron {
-            font-size: 18px;
-            color: #999;
         }
 
         .home-indicator {
@@ -264,7 +264,9 @@
                 </div>
                 <div class="menu-right">
                     <span class="status-badge off" id="notifications-badge">Off</span>
-                    <span class="chevron">›</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18l6-6-6-6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
             </a>
 
@@ -279,7 +281,9 @@
                 </div>
                 <div class="menu-right">
                     <span class="status-badge off" id="spend-limits-badge">Off</span>
-                    <span class="chevron">›</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18l6-6-6-6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
             </a>
 
@@ -295,7 +299,9 @@
                 </div>
                 <div class="menu-right">
                     <span class="status-badge on" id="restrictions-badge">On</span>
-                    <span class="chevron">›</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18l6-6-6-6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
             </a>
 
@@ -310,7 +316,9 @@
                 </div>
                 <div class="menu-right">
                     <span class="status-badge off" id="international-badge">Off</span>
-                    <span class="chevron">›</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18l6-6-6-6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
             </a>
         </div>
