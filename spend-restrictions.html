@@ -1892,10 +1892,8 @@
                 Object.assign(state, JSON.parse(saved));
             }
 
-            // Initialize gaming category if not present
-            if (!state.youth.categories.hasOwnProperty('gaming')) {
-                state.youth.categories.gaming = false;
-            }
+            // Always reset gaming to false (off by default)
+            state.youth.categories.gaming = false;
 
             // Initialize business categories state (both on page and in modal)
             const businessCategories = document.querySelectorAll('#business-categories .category-item, #modal-categories-container .category-item');
