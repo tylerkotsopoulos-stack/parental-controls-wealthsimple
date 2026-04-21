@@ -2367,6 +2367,39 @@
             const modal = document.getElementById('search-modal');
             const modalSearch = document.getElementById('modal-search');
 
+            // Sync enable all toggle state
+            const enableAllToggle = document.getElementById('enable-all-toggle');
+            const modalEnableAllToggle = document.getElementById('modal-enable-all-toggle');
+            if (enableAllToggle.classList.contains('active')) {
+                modalEnableAllToggle.classList.add('active');
+            } else {
+                modalEnableAllToggle.classList.remove('active');
+            }
+
+            // Sync individual category states from main page to modal
+            Object.keys(state.business.categories).forEach(categoryKey => {
+                const mainCategoryItem = document.querySelector(`#business-categories [data-category="${categoryKey}"]`);
+                const modalCategoryItem = document.querySelector(`#modal-categories-container [data-category="${categoryKey}"]`);
+
+                if (mainCategoryItem && modalCategoryItem) {
+                    const mainToggle = mainCategoryItem.querySelector('.toggle-switch');
+                    const modalToggle = modalCategoryItem.querySelector('.toggle-switch');
+
+                    if (mainToggle.classList.contains('active')) {
+                        modalToggle.classList.add('active');
+                    } else {
+                        modalToggle.classList.remove('active');
+                    }
+
+                    // Sync disabled state
+                    if (mainCategoryItem.classList.contains('disabled')) {
+                        modalCategoryItem.classList.add('disabled');
+                    } else {
+                        modalCategoryItem.classList.remove('disabled');
+                    }
+                }
+            });
+
             modal.classList.add('active');
             setTimeout(() => {
                 modalSearch.focus();
