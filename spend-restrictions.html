@@ -1172,6 +1172,17 @@
 
                 <div class="section-label">POPULAR</div>
 
+                <div class="category-item disabled" data-category="gaming">
+                    <div class="category-icon">🎮</div>
+                    <div class="category-info">
+                        <div class="category-name">Gaming</div>
+                        <div class="category-description">Online games and in-app purchases</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <div class="category-item disabled" data-category="travel">
                     <div class="category-icon">✈️</div>
                     <div class="category-info">
@@ -1239,7 +1250,7 @@
                 </div>
 
                 <button class="view-all-button" onclick="openSearchModal()">
-                    View all categories (29)
+                    View all categories (30)
                 </button>
 
                 <div class="restricted-banner">
@@ -1383,7 +1394,7 @@
                 </div>
 
                 <button class="view-all-button" onclick="openSearchModal()">
-                    View all categories (29)
+                    View all categories (30)
                 </button>
             </div>
 
@@ -1674,6 +1685,19 @@
                     </div>
                 </div>
 
+                <div class="section-label">G</div>
+
+                <div class="category-item disabled" data-category="gaming">
+                    <div class="category-icon">🎮</div>
+                    <div class="category-info">
+                        <div class="category-name">Gaming</div>
+                        <div class="category-description">Online games and in-app purchases</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <div class="section-label">H</div>
 
                 <div class="category-item disabled" data-category="healthcare">
@@ -1937,7 +1961,8 @@
             youthCategories.forEach(item => {
                 const categoryKey = item.getAttribute('data-category');
                 if (categoryKey && !state.youth.categories.hasOwnProperty(categoryKey)) {
-                    state.youth.categories[categoryKey] = item.classList.contains('disabled');
+                    const toggle = item.querySelector('.toggle-switch');
+                    state.youth.categories[categoryKey] = toggle.classList.contains('active');
                 }
             });
 
@@ -1999,7 +2024,7 @@
                 if (categoryKey && state.youth.categories[categoryKey] !== undefined) {
                     const toggle = item.querySelector('.toggle-switch');
                     toggle.classList.toggle('active', state.youth.categories[categoryKey]);
-                    item.classList.toggle('disabled', state.youth.categories[categoryKey]);
+                    item.classList.toggle('disabled', !state.youth.categories[categoryKey]);
                 }
             });
         }
@@ -2069,12 +2094,19 @@
             const categoryItems = document.querySelectorAll('#youth-categories .category-item');
             categoryItems.forEach(item => {
                 const categoryToggle = item.querySelector('.toggle-switch');
+                const categoryKey = item.getAttribute('data-category');
+
                 if (!isActive) {
+                    // Turning "Enable all" ON - enable all categories and disable individual control
                     categoryToggle.classList.add('active');
                     item.classList.add('disabled');
+                    if (categoryKey) {
+                        state.youth.categories[categoryKey] = true;
+                    }
                 } else {
-                    categoryToggle.classList.remove('active');
+                    // Turning "Enable all" OFF - keep categories enabled but allow individual control
                     item.classList.remove('disabled');
+                    // Keep the toggle active and state true - don't disable everything
                 }
             });
 
@@ -2200,6 +2232,33 @@
                     modalCard.classList.remove('bounce');
                 }, 400);
             }
+        }
+
+        function toggleYouthCategory(categoryItem) {
+            // Only allow toggling if "Enable all" is off
+            const enableAllToggle = document.getElementById('youth-enable-all-toggle');
+            if (enableAllToggle.classList.contains('active')) {
+                return; // Can't toggle individual items when "Enable all" is on
+            }
+
+            const toggle = categoryItem.querySelector('.toggle-switch');
+            const categoryKey = categoryItem.getAttribute('data-category');
+
+            toggle.classList.toggle('active');
+            categoryItem.classList.toggle('disabled', !toggle.classList.contains('active'));
+
+            // Update state
+            if (categoryKey) {
+                state.youth.categories[categoryKey] = toggle.classList.contains('active');
+            }
+
+            checkForChanges();
+
+            // Add bounce animation
+            categoryItem.classList.add('bounce');
+            setTimeout(() => {
+                categoryItem.classList.remove('bounce');
+            }, 400);
         }
 
         function toggleBusinessCategory(categoryItem) {
@@ -2373,6 +2432,15 @@
 
         // Add click handlers to all business category items
         document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to youth category items
+            const youthCategories = document.querySelectorAll('#youth-categories .category-item');
+            youthCategories.forEach(item => {
+                item.addEventListener('click', function() {
+                    toggleYouthCategory(this);
+                });
+            });
+
+            // Add click handlers to business category items
             const businessCategories = document.querySelectorAll('#business-categories .category-item');
             businessCategories.forEach(item => {
                 item.addEventListener('click', function() {
