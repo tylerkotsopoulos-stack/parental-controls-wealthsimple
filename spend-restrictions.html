@@ -2024,7 +2024,7 @@
                 if (categoryKey && state.youth.categories[categoryKey] !== undefined) {
                     const toggle = item.querySelector('.toggle-switch');
                     toggle.classList.toggle('active', state.youth.categories[categoryKey]);
-                    item.classList.toggle('disabled', !state.youth.categories[categoryKey]);
+                    // Note: disabled class is managed by toggleYouthEnableAll, not here
                 }
             });
         }
@@ -2104,9 +2104,12 @@
                         state.youth.categories[categoryKey] = true;
                     }
                 } else {
-                    // Turning "Enable all" OFF - keep categories enabled but allow individual control
+                    // Turning "Enable all" OFF - disable all categories and allow individual control
                     item.classList.remove('disabled');
-                    // Keep the toggle active and state true - don't disable everything
+                    categoryToggle.classList.remove('active');
+                    if (categoryKey) {
+                        state.youth.categories[categoryKey] = false;
+                    }
                 }
             });
 
@@ -2245,7 +2248,6 @@
             const categoryKey = categoryItem.getAttribute('data-category');
 
             toggle.classList.toggle('active');
-            categoryItem.classList.toggle('disabled', !toggle.classList.contains('active'));
 
             // Update state
             if (categoryKey) {
