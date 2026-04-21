@@ -218,6 +218,60 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        .toast {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: #EBEFFA;
+            border-radius: 16px;
+            width: 206px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.hide {
+            transform: translateX(-50%) translateY(-120px);
+            opacity: 0;
+        }
+
+        .toast-icon {
+            width: 18px;
+            height: 18px;
+            background: #305FAA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-icon svg {
+            width: 10px;
+            height: 10px;
+        }
+
+        .toast-message {
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #305FAA;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -240,6 +294,15 @@
                     <rect x="23" y="3.5" width="1.5" height="5" rx="0.75" fill="#32302f" fill-opacity="0.4"/>
                 </svg>
             </div>
+        </div>
+
+        <div class="toast" id="toast">
+            <div class="toast-icon">
+                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="toast-message">Parental controls saved</div>
         </div>
 
         <div class="nav-header">
@@ -383,6 +446,58 @@
         updateBadges();
         window.addEventListener('storage', updateBadges);
         window.addEventListener('focus', updateBadges);
+
+        // Toast notification
+        let toastTimeout;
+
+        function hideToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('show');
+            toast.classList.add('hide');
+            if (toastTimeout) clearTimeout(toastTimeout);
+        }
+
+        function showToast() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('saved') === 'true') {
+                const toast = document.getElementById('toast');
+
+                // Show toast with animation
+                setTimeout(() => {
+                    toast.classList.remove('hide');
+                    toast.classList.add('show');
+                }, 100);
+
+                // Auto-hide after 3 seconds
+                toastTimeout = setTimeout(() => {
+                    hideToast();
+                }, 3000);
+
+                // Add swipe up gesture
+                let touchStartY = 0;
+                let touchEndY = 0;
+
+                toast.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                toast.addEventListener('touchmove', (e) => {
+                    touchEndY = e.touches[0].clientY;
+                }, { passive: true });
+
+                toast.addEventListener('touchend', () => {
+                    const swipeDistance = touchStartY - touchEndY;
+                    if (swipeDistance > 30) {
+                        hideToast();
+                    }
+                }, { passive: true });
+
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        showToast();
     </script>
 </body>
 </html>

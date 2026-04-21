@@ -424,6 +424,267 @@
             transform: translateY(12px);
         }
 
+        .restricted-banner {
+            background: #f0f0f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .restricted-banner-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .restricted-banner-title {
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+            margin-bottom: 8px;
+        }
+
+        .restricted-banner-description {
+            font-family: 'Wealthsimple Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .learn-more-button {
+            border: 1px solid #000;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.00) 100%), #000;
+            color: #fff;
+            border-radius: 100px;
+            padding: 8px 16px;
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .learn-more-button:active {
+            transform: scale(0.98);
+        }
+
+        .restricted-banner-image {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-15deg);
+            width: 220px;
+            height: auto;
+        }
+
+        .restricted-banner-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .bottom-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            max-height: 700px;
+            overflow-y: auto;
+        }
+
+        .bottom-sheet.show {
+            transform: translateY(0);
+        }
+
+        .bottom-sheet-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1999;
+            border-radius: 47px;
+        }
+
+        .bottom-sheet-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .bottom-sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: #D1D1D6;
+            border-radius: 2px;
+            margin: 12px auto 20px;
+        }
+
+        .bottom-sheet-content {
+            padding: 0 20px 20px;
+        }
+
+        .bottom-sheet-button {
+            width: 100%;
+            min-height: 60px;
+            padding: 16px 24px;
+            border-radius: 1000px;
+            border: 1px solid #000;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.00) 100%), #000;
+            color: #ffffff;
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 24px;
+        }
+
+        .bottom-sheet-button:active {
+            transform: scale(0.98);
+        }
+
+        .bottom-sheet-title {
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: #32302f;
+            margin-bottom: 16px;
+        }
+
+        .bottom-sheet-text {
+            font-family: 'Wealthsimple Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .restricted-categories-list {
+            margin-top: 20px;
+        }
+
+        .restricted-category-item {
+            background: #F5F5F5;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .restricted-category-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .restricted-category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .restricted-category-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .restricted-category-content {
+            flex: 1;
+        }
+
+        .restricted-category-name {
+            font-family: 'Wealthsimple Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+            margin-bottom: 2px;
+        }
+
+        .restricted-category-description {
+            font-family: 'Wealthsimple Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .restricted-category-chevron {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .restricted-category-item.expanded .restricted-category-chevron {
+            transform: rotate(180deg);
+        }
+
+        .restricted-category-retailers {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .restricted-category-item.expanded .restricted-category-retailers {
+            max-height: 500px;
+        }
+
+        .retailers-list {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .retailer-tag {
+            display: inline-block;
+            background: #fff;
+            border-radius: 100px;
+            padding: 6px 12px;
+            margin: 4px 4px 4px 0;
+            font-family: 'Wealthsimple Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .view-all-button {
+            width: 100%;
+            min-height: 60px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 16px 24px;
+            border: 2px solid #E5E5E5;
+            border-radius: 1000px;
+            font-family: 'Wealthsimple Sans Display', 'Wealthsimple Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            background: #fff;
+            color: #32302f;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .view-all-button:hover {
+            background: #F5F5F5;
+        }
+
+        .view-all-button:active {
+            transform: scale(0.98);
+        }
+
         .search-container {
             position: relative;
             margin-bottom: 20px;
@@ -785,8 +1046,6 @@
             flex: 1;
             overflow-y: auto;
             padding: 0 20px 120px;
-            perspective: 1000px;
-            perspective-origin: center center;
             margin-top: -200px;
             padding-top: 200px;
         }
@@ -902,71 +1161,92 @@
 
             <div class="section" id="youth-categories">
                 <h2 class="section-header">Categories</h2>
-                <p class="section-description">Select the categories you want to restrict.</p>
+                <p class="section-description">Select the categories you want to enable for spending.</p>
 
-                <div class="restriction-card">
-                    <div class="restriction-content">
-                        <div class="restriction-label">Restrict all categories</div>
-                    </div>
-                    <div class="toggle-switch active" id="restrict-all-toggle" onclick="toggleRestrictAll()">
+                <div class="enable-all-card">
+                    <div class="enable-all-label">Enable all spend categories</div>
+                    <div class="toggle-switch active" id="youth-enable-all-toggle" onclick="toggleYouthEnableAll()">
                         <div class="toggle-knob"></div>
                     </div>
                 </div>
 
-                <div class="category-list">
-                    <div class="category-item" id="gambling-item">
-                        <div class="category-icon">🎲</div>
-                        <div class="category-content">
-                            <div class="category-label">Gambling</div>
-                            <div class="category-description">Betting apps and lottery tickets</div>
-                        </div>
-                        <div class="toggle-switch active" id="gambling-toggle" onclick="toggleCategory('gambling')">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
+                <div class="section-label">POPULAR</div>
 
-                    <div class="category-item" id="tobacco-item">
-                        <div class="category-icon">🚬</div>
-                        <div class="category-content">
-                            <div class="category-label">Tobacco & vapes</div>
-                            <div class="category-description">Nicotine products and vape shops</div>
-                        </div>
-                        <div class="toggle-switch active" id="tobacco-toggle" onclick="toggleCategory('tobacco')">
-                            <div class="toggle-knob"></div>
-                        </div>
+                <div class="category-item disabled" data-category="travel">
+                    <div class="category-icon">✈️</div>
+                    <div class="category-info">
+                        <div class="category-name">Travel and transportation</div>
+                        <div class="category-description">Flights, hotels, cars, ride share</div>
                     </div>
-
-                    <div class="category-item" id="alcohol-item">
-                        <div class="category-icon">🍺</div>
-                        <div class="category-content">
-                            <div class="category-label">Alcohol and cannabis</div>
-                            <div class="category-description">Liquor stores and dispensaries</div>
-                        </div>
-                        <div class="toggle-switch active" id="alcohol-toggle" onclick="toggleCategory('alcohol')">
-                            <div class="toggle-knob"></div>
-                        </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
                     </div>
+                </div>
 
-                    <div class="category-item" id="gaming-item">
-                        <div class="category-icon">🎮</div>
-                        <div class="category-content">
-                            <div class="category-label">Online gaming</div>
-                            <div class="category-description">Games and in-app purchases</div>
-                        </div>
-                        <div class="toggle-switch active" id="gaming-toggle" onclick="toggleCategory('gaming')">
-                            <div class="toggle-knob"></div>
-                        </div>
+                <div class="category-item disabled" data-category="meals">
+                    <div class="category-icon">🍽️</div>
+                    <div class="category-info">
+                        <div class="category-name">Meals & entertainment</div>
+                        <div class="category-description">Restaurants, dinners, catering</div>
                     </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
 
-                    <div class="category-item" id="adult-item">
-                        <div class="category-icon">🔞</div>
-                        <div class="category-content">
-                            <div class="category-label">Adult content</div>
-                            <div class="category-description">Age-restricted websites</div>
-                        </div>
-                        <div class="toggle-switch active" id="adult-toggle" onclick="toggleCategory('adult')">
-                            <div class="toggle-knob"></div>
-                        </div>
+                <div class="category-item disabled" data-category="fuel">
+                    <div class="category-icon">⛽</div>
+                    <div class="category-info">
+                        <div class="category-name">Fuel</div>
+                        <div class="category-description">Gas stations, EV charging</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
+                <div class="category-item disabled" data-category="software">
+                    <div class="category-icon">💻</div>
+                    <div class="category-info">
+                        <div class="category-name">Software & subscriptions</div>
+                        <div class="category-description">SaaS tools, apps, digital services</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
+                <div class="category-item disabled" data-category="training">
+                    <div class="category-icon">📚</div>
+                    <div class="category-info">
+                        <div class="category-name">Training & education</div>
+                        <div class="category-description">Courses, conferences</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
+                <div class="category-item disabled" data-category="telecommunications">
+                    <div class="category-icon">📱</div>
+                    <div class="category-info">
+                        <div class="category-name">Telecommunications</div>
+                        <div class="category-description">Mobile, internet, data plans</div>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
+                <button class="view-all-button" onclick="openSearchModal()">
+                    View all categories (29)
+                </button>
+
+                <div class="restricted-banner">
+                    <div class="restricted-banner-content">
+                        <div class="restricted-banner-title">Restricted categories</div>
+                        <div class="restricted-banner-description">We block underage and age restricted purchases at retailers your youth shouldn't be spending at.</div>
+                        <button class="learn-more-button" onclick="openBottomSheet()">Learn more</button>
                     </div>
                 </div>
             </div>
@@ -1110,6 +1390,103 @@
             <div class="mode-switcher">
                 <button class="mode-option active" id="youth-mode" onclick="switchMode('youth')" data-tooltip="Youth">🎓</button>
                 <button class="mode-option" id="business-mode" onclick="switchMode('business')" data-tooltip="Business">💼</button>
+            </div>
+        </div>
+
+        <!-- Bottom Sheet Overlay -->
+        <div class="bottom-sheet-overlay" id="bottom-sheet-overlay" onclick="closeBottomSheet()"></div>
+
+        <!-- Bottom Sheet Modal -->
+        <div class="bottom-sheet" id="bottom-sheet">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-content">
+                <h2 class="bottom-sheet-title">Restricted categories</h2>
+                <p class="bottom-sheet-text">To keep your youth safe, we automatically block purchases from certain age-restricted categories. These restrictions cannot be removed.</p>
+                <div class="restricted-categories-list">
+                    <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
+                        <div class="restricted-category-header">
+                            <span class="restricted-category-icon">🎲</span>
+                            <div class="restricted-category-content">
+                                <div class="restricted-category-name">Gambling</div>
+                                <div class="restricted-category-description">Betting apps and lottery tickets</div>
+                            </div>
+                            <svg class="restricted-category-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M5 7.5L10 12.5L15 7.5" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="restricted-category-retailers">
+                            <div class="retailers-list">
+                                <span class="retailer-tag">DraftKings</span>
+                                <span class="retailer-tag">FanDuel</span>
+                                <span class="retailer-tag">Bet365</span>
+                                <span class="retailer-tag">OLG</span>
+                                <span class="retailer-tag">PlayNow</span>
+                                <span class="retailer-tag">Lottery retailers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
+                        <div class="restricted-category-header">
+                            <span class="restricted-category-icon">🚬</span>
+                            <div class="restricted-category-content">
+                                <div class="restricted-category-name">Tobacco & vapes</div>
+                                <div class="restricted-category-description">Nicotine products and vape shops</div>
+                            </div>
+                            <svg class="restricted-category-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M5 7.5L10 12.5L15 7.5" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="restricted-category-retailers">
+                            <div class="retailers-list">
+                                <span class="retailer-tag">Convenience stores</span>
+                                <span class="retailer-tag">Vape shops</span>
+                                <span class="retailer-tag">Smoke shops</span>
+                                <span class="retailer-tag">Gas stations</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
+                        <div class="restricted-category-header">
+                            <span class="restricted-category-icon">🍺</span>
+                            <div class="restricted-category-content">
+                                <div class="restricted-category-name">Alcohol and cannabis</div>
+                                <div class="restricted-category-description">Liquor stores and dispensaries</div>
+                            </div>
+                            <svg class="restricted-category-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M5 7.5L10 12.5L15 7.5" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="restricted-category-retailers">
+                            <div class="retailers-list">
+                                <span class="retailer-tag">LCBO</span>
+                                <span class="retailer-tag">Beer Store</span>
+                                <span class="retailer-tag">SAQ</span>
+                                <span class="retailer-tag">Cannabis dispensaries</span>
+                                <span class="retailer-tag">Bars & pubs</span>
+                                <span class="retailer-tag">Wine shops</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
+                        <div class="restricted-category-header">
+                            <span class="restricted-category-icon">🔞</span>
+                            <div class="restricted-category-content">
+                                <div class="restricted-category-name">Adult content</div>
+                                <div class="restricted-category-description">Age-restricted websites</div>
+                            </div>
+                            <svg class="restricted-category-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M5 7.5L10 12.5L15 7.5" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="restricted-category-retailers">
+                            <div class="retailers-list">
+                                <span class="retailer-tag">Adult websites</span>
+                                <span class="retailer-tag">Age-restricted content platforms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="bottom-sheet-button" onclick="closeBottomSheet()">Got it</button>
             </div>
         </div>
 
@@ -1525,18 +1902,14 @@
 
     <script>
         const state = {
-            restrictAll: true,
-            transactions: {
-                'in-person': false,
-                online: false,
-                atm: false
-            },
-            categories: {
-                gambling: true,
-                tobacco: true,
-                alcohol: true,
-                gaming: true,
-                adult: true
+            youth: {
+                enableAll: true,
+                transactions: {
+                    'in-person': false,
+                    online: false,
+                    atm: false
+                },
+                categories: {}
             },
             business: {
                 enableAll: true,
@@ -1559,6 +1932,15 @@
                 Object.assign(state, JSON.parse(saved));
             }
 
+            // Initialize youth categories state
+            const youthCategories = document.querySelectorAll('#youth-categories .category-item');
+            youthCategories.forEach(item => {
+                const categoryKey = item.getAttribute('data-category');
+                if (categoryKey && !state.youth.categories.hasOwnProperty(categoryKey)) {
+                    state.youth.categories[categoryKey] = item.classList.contains('disabled');
+                }
+            });
+
             // Initialize business categories state (both on page and in modal)
             const businessCategories = document.querySelectorAll('#business-categories .category-item, #modal-categories-container .category-item');
             businessCategories.forEach(item => {
@@ -1572,11 +1954,12 @@
             initialState = JSON.parse(JSON.stringify(state));
             updateUI();
             updateBusinessUI();
+            updateYouthUI();
         }
 
         function toggleTransaction(type) {
-            state.transactions[type] = !state.transactions[type];
-            updateUI();
+            state.youth.transactions[type] = !state.youth.transactions[type];
+            updateYouthUI();
             checkForChanges();
 
             // Add bounce animation
@@ -1588,41 +1971,6 @@
             }, 400);
         }
 
-        function toggleRestrictAll() {
-            state.restrictAll = !state.restrictAll;
-
-            if (state.restrictAll) {
-                inflammatoryCategories.forEach(cat => {
-                    state.categories[cat] = true;
-                });
-            }
-
-            updateUI();
-            checkForChanges();
-
-            // Add bounce animation
-            const toggle = document.getElementById('restrict-all-toggle');
-            const card = toggle.closest('.restriction-card');
-            card.classList.add('bounce');
-            setTimeout(() => {
-                card.classList.remove('bounce');
-            }, 400);
-        }
-
-        function toggleCategory(category) {
-            if (state.restrictAll) return;
-
-            state.categories[category] = !state.categories[category];
-            updateUI();
-            checkForChanges();
-
-            // Add bounce animation
-            const item = document.getElementById(`${category}-item`);
-            item.classList.add('bounce');
-            setTimeout(() => {
-                item.classList.remove('bounce');
-            }, 400);
-        }
 
         function checkForChanges() {
             // Check if current state differs from initial state
@@ -1631,32 +1979,118 @@
             saveButton.classList.toggle('visible', hasChanges);
         }
 
-        function updateUI() {
-            const restrictAllToggle = document.getElementById('restrict-all-toggle');
-            restrictAllToggle.classList.toggle('active', state.restrictAll);
+        function updateYouthUI() {
+            const youthEnableAllToggle = document.getElementById('youth-enable-all-toggle');
+            if (youthEnableAllToggle) {
+                youthEnableAllToggle.classList.toggle('active', state.youth.enableAll);
+            }
 
-            Object.keys(state.transactions).forEach(type => {
+            Object.keys(state.youth.transactions).forEach(type => {
                 const toggle = document.getElementById(`${type}-toggle`);
-                toggle.classList.toggle('active', state.transactions[type]);
+                if (toggle) {
+                    toggle.classList.toggle('active', state.youth.transactions[type]);
+                }
             });
 
-            Object.keys(state.categories).forEach(category => {
-                const toggle = document.getElementById(`${category}-toggle`);
-                const item = document.getElementById(`${category}-item`);
-
-                toggle.classList.toggle('active', state.categories[category]);
-
-                if (state.restrictAll && inflammatoryCategories.includes(category)) {
-                    item.classList.add('disabled');
-                } else {
-                    item.classList.remove('disabled');
+            // Update youth category items
+            const youthCategoryItems = document.querySelectorAll('#youth-categories .category-item');
+            youthCategoryItems.forEach(item => {
+                const categoryKey = item.getAttribute('data-category');
+                if (categoryKey && state.youth.categories[categoryKey] !== undefined) {
+                    const toggle = item.querySelector('.toggle-switch');
+                    toggle.classList.toggle('active', state.youth.categories[categoryKey]);
+                    item.classList.toggle('disabled', state.youth.categories[categoryKey]);
                 }
             });
         }
 
+        // Bottom sheet functions
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        function openBottomSheet() {
+            const bottomSheet = document.getElementById('bottom-sheet');
+            const overlay = document.getElementById('bottom-sheet-overlay');
+            bottomSheet.classList.add('show');
+            overlay.classList.add('show');
+
+            // Add swipe down gesture
+            bottomSheet.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            bottomSheet.addEventListener('touchmove', (e) => {
+                touchEndY = e.touches[0].clientY;
+            }, { passive: true });
+
+            bottomSheet.addEventListener('touchend', () => {
+                const swipeDistance = touchEndY - touchStartY;
+                if (swipeDistance > 50) {
+                    closeBottomSheet();
+                }
+            }, { passive: true });
+        }
+
+        function closeBottomSheet() {
+            const bottomSheet = document.getElementById('bottom-sheet');
+            const overlay = document.getElementById('bottom-sheet-overlay');
+            bottomSheet.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+        function toggleRestrictedCategory(element) {
+            // Prevent event from bubbling up
+            event.stopPropagation();
+
+            // Check if this element is already expanded
+            const isExpanded = element.classList.contains('expanded');
+
+            // Close all other expanded items
+            const allItems = document.querySelectorAll('.restricted-category-item');
+            allItems.forEach(item => {
+                item.classList.remove('expanded');
+            });
+
+            // If this element wasn't expanded, expand it
+            if (!isExpanded) {
+                element.classList.add('expanded');
+            }
+        }
+
+        // Youth enable all toggle
+        function toggleYouthEnableAll() {
+            const toggle = document.getElementById('youth-enable-all-toggle');
+            const isActive = toggle.classList.contains('active');
+
+            state.youth.enableAll = !isActive;
+            toggle.classList.toggle('active');
+
+            // Update all category toggles in youth mode
+            const categoryItems = document.querySelectorAll('#youth-categories .category-item');
+            categoryItems.forEach(item => {
+                const categoryToggle = item.querySelector('.toggle-switch');
+                if (!isActive) {
+                    categoryToggle.classList.add('active');
+                    item.classList.add('disabled');
+                } else {
+                    categoryToggle.classList.remove('active');
+                    item.classList.remove('disabled');
+                }
+            });
+
+            // Add bounce animation
+            const card = toggle.closest('.enable-all-card');
+            card.classList.add('bounce');
+            setTimeout(() => {
+                card.classList.remove('bounce');
+            }, 400);
+
+            checkForChanges();
+        }
+
         function saveRestrictions() {
             localStorage.setItem('restrictions', JSON.stringify(state));
-            window.location.href = 'index.html';
+            window.location.href = 'index.html?saved=true';
         }
 
         // Mode switching functions
@@ -1670,10 +2104,12 @@
             document.getElementById('business-mode').classList.toggle('active', mode === 'business');
 
             // Toggle sections
+            const restrictedBanner = document.querySelector('.restricted-banner');
             if (mode === 'youth') {
                 document.getElementById('youth-section').classList.remove('hidden');
                 document.getElementById('youth-categories').classList.remove('hidden');
                 document.getElementById('youth-divider').classList.remove('hidden');
+                if (restrictedBanner) restrictedBanner.style.display = 'block';
                 document.getElementById('business-section').classList.add('hidden');
                 document.getElementById('business-divider').classList.add('hidden');
                 document.getElementById('business-categories').classList.add('hidden');
@@ -1681,6 +2117,7 @@
                 document.getElementById('youth-section').classList.add('hidden');
                 document.getElementById('youth-categories').classList.add('hidden');
                 document.getElementById('youth-divider').classList.add('hidden');
+                if (restrictedBanner) restrictedBanner.style.display = 'none';
                 document.getElementById('business-section').classList.remove('hidden');
                 document.getElementById('business-divider').classList.remove('hidden');
                 document.getElementById('business-categories').classList.remove('hidden');
@@ -1873,8 +2310,6 @@
             setTimeout(() => {
                 modalSearch.focus();
             }, 100);
-            // Apply 3D effect after modal opens
-            setTimeout(apply3DScrollEffect, 100);
         }
 
         function closeSearchModal() {
@@ -1927,9 +2362,6 @@
 
             // Update search placeholder
             searchInput.placeholder = `Search all (${visibleCount})`;
-
-            // Recalculate 3D scroll effect for visible items
-            apply3DScrollEffect();
         }
 
         function clearModalSearch() {
@@ -1959,49 +2391,6 @@
 
         loadState();
 
-        // 3D Scroll Wheel Effect
-        function apply3DScrollEffect() {
-            const container = document.getElementById('modal-categories-container');
-            if (!container) {
-                return;
-            }
-
-            const items = container.querySelectorAll('.category-item');
-            const containerRect = container.getBoundingClientRect();
-            const containerCenter = containerRect.top + containerRect.height / 2;
-            const maxDistance = containerRect.height;
-
-            items.forEach(item => {
-                // Reset transforms on hidden items
-                if (item.style.display === 'none') {
-                    item.style.transform = 'none';
-                    item.style.opacity = '1';
-                    return;
-                }
-
-                const itemRect = item.getBoundingClientRect();
-                const itemCenter = itemRect.top + itemRect.height / 2;
-                const distance = itemCenter - containerCenter;
-
-                // Calculate a smoother rotation based on distance from center
-                const rotateX = (distance / maxDistance) * 25; // Increased rotation for more wheel effect
-                const scale = Math.max(0.85, 1 - (Math.abs(distance) / maxDistance) * 0.15); // Scale from 0.85 to 1
-                const opacity = Math.max(0.5, 1 - (Math.abs(distance) / maxDistance) * 0.5); // Fade to 0.5
-
-                // Apply transform with transform-origin at center for wheel effect
-                item.style.transformOrigin = 'center center';
-                item.style.transform = `rotateX(${rotateX}deg) scale(${scale})`;
-                item.style.opacity = opacity;
-                item.style.pointerEvents = 'auto'; // Ensure clicks still work
-                item.style.transition = 'transform 0.15s ease-out, opacity 0.15s ease-out';
-            });
-        }
-
-        // Apply effect on scroll
-        const modalContent = document.getElementById('modal-categories-container');
-        if (modalContent) {
-            modalContent.addEventListener('scroll', apply3DScrollEffect);
-        }
     </script>
 </body>
 </html>

@@ -299,14 +299,7 @@
         }
 
         .error-message.visible {
-            display: flex;
-            gap: 6px;
-            align-items: flex-start;
-        }
-
-        .error-icon {
-            flex-shrink: 0;
-            font-size: 14px;
+            display: block;
         }
 
         .save-button {
@@ -350,10 +343,27 @@
             transform: translateX(-50%) scale(0.98);
         }
 
-        .save-button:disabled {
-            background: #D1D1D6;
-            color: #666;
-            cursor: not-allowed;
+        .clear-all-link {
+            display: none;
+            text-align: right;
+            margin-top: 32px;
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #32302f;
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .clear-all-link.visible {
+            display: block;
+        }
+
+        .clear-all-link:hover {
+            opacity: 0.7;
         }
 
         .home-indicator {
@@ -430,7 +440,6 @@
                                placeholder="50.00" value="50.00">
                     </div>
                     <div class="error-message" id="per-transaction-error">
-                        <span class="error-icon">⚠️</span>
                         <span id="per-transaction-error-text"></span>
                     </div>
                 </div>
@@ -457,7 +466,6 @@
                                placeholder="100.00" value="100.00">
                     </div>
                     <div class="error-message" id="daily-error">
-                        <span class="error-icon">⚠️</span>
                         <span id="daily-error-text"></span>
                     </div>
                 </div>
@@ -486,7 +494,6 @@
                                placeholder="500.00" value="500.00">
                     </div>
                     <div class="error-message" id="weekly-error">
-                        <span class="error-icon">⚠️</span>
                         <span id="weekly-error-text"></span>
                     </div>
                 </div>
@@ -518,11 +525,12 @@
                                placeholder="1,000.00" value="1,000.00">
                     </div>
                     <div class="error-message" id="monthly-error">
-                        <span class="error-icon">⚠️</span>
                         <span id="monthly-error-text"></span>
                     </div>
                 </div>
             </div>
+
+            <button class="clear-all-link" id="clear-all-link" onclick="clearAll()">Clear all</button>
         </div>
 
         <button class="save-button" id="save-button" onclick="saveLimits()">Save</button>
@@ -538,6 +546,7 @@
         };
 
         let initialState = {};
+        let lastEditedField = null;
 
         function loadState() {
             const saved = localStorage.getItem('spendLimits');
@@ -556,6 +565,8 @@
         }
 
         function updateUI() {
+            let hasActiveLimits = false;
+
             Object.keys(state).forEach(type => {
                 const toggle = document.getElementById(`${type}-toggle`);
                 const field = document.getElementById(`${type}-field`);
@@ -563,11 +574,20 @@
                 if (state[type].active) {
                     toggle.classList.add('active');
                     field.classList.add('visible');
+                    hasActiveLimits = true;
                 } else {
                     toggle.classList.remove('active');
                     field.classList.remove('visible');
                 }
             });
+
+            // Show/hide clear all link based on active limits
+            const clearAllLink = document.getElementById('clear-all-link');
+            if (hasActiveLimits) {
+                clearAllLink.classList.add('visible');
+            } else {
+                clearAllLink.classList.remove('visible');
+            }
         }
 
         function getInputValue(type) {
@@ -588,26 +608,39 @@
             clearErrors();
             let hasErrors = false;
 
+            // Per transaction vs Daily validation
             if (state['per-transaction'].active && state.daily.active) {
                 if (state['per-transaction'].amount > state.daily.amount) {
-                    showError('per-transaction',
-                        `Per transaction limit ($${state['per-transaction'].amount.toFixed(2)}) cannot exceed daily limit ($${state.daily.amount.toFixed(2)})`);
+                    // Show error on the field that was last edited
+                    if (lastEditedField === 'daily') {
+                        showError('daily', 'Daily limit must exceed per transaction limit.');
+                    } else {
+                        showError('per-transaction', 'Per transaction limit cannot exceed daily limit.');
+                    }
                     hasErrors = true;
                 }
             }
 
+            // Daily vs Weekly validation
             if (state.daily.active && state.weekly.active) {
                 if (state.daily.amount > state.weekly.amount) {
-                    showError('daily',
-                        `Daily limit ($${state.daily.amount.toFixed(2)}) cannot exceed weekly limit ($${state.weekly.amount.toFixed(2)})`);
+                    if (lastEditedField === 'weekly') {
+                        showError('weekly', 'Weekly limit must exceed daily limit.');
+                    } else {
+                        showError('daily', 'Daily limit cannot exceed weekly limit.');
+                    }
                     hasErrors = true;
                 }
             }
 
+            // Weekly vs Monthly validation
             if (state.weekly.active && state.monthly.active) {
                 if (state.weekly.amount > state.monthly.amount) {
-                    showError('weekly',
-                        `Weekly limit ($${state.weekly.amount.toFixed(2)}) cannot exceed monthly limit ($${state.monthly.amount.toFixed(2)})`);
+                    if (lastEditedField === 'monthly') {
+                        showError('monthly', 'Monthly limit must exceed weekly limit.');
+                    } else {
+                        showError('weekly', 'Weekly limit cannot exceed monthly limit.');
+                    }
                     hasErrors = true;
                 }
             }
@@ -615,8 +648,7 @@
             if (state.daily.active && state.weekly.active && !hasErrors) {
                 const maxWeekly = state.daily.amount * 7;
                 if (state.weekly.amount > maxWeekly) {
-                    showError('weekly',
-                        `Weekly limit ($${state.weekly.amount.toFixed(2)}) is higher than 7 days of daily spending ($${maxWeekly.toFixed(2)}). This means the daily limit will always be reached first.`);
+                    showError('weekly', 'Weekly limit is higher than 7 days of daily spending. This means the daily limit will always be reached first.');
                     hasErrors = true;
                 }
             }
@@ -624,15 +656,13 @@
             if (state.daily.active && state.monthly.active && !hasErrors) {
                 const maxMonthly = state.daily.amount * 28;
                 if (state.monthly.amount > maxMonthly) {
-                    showError('monthly',
-                        `Monthly limit ($${state.monthly.amount.toFixed(2)}) is higher than 28 days of daily spending ($${maxMonthly.toFixed(2)}). This means the daily limit will always be reached first.`);
+                    showError('monthly', 'Monthly limit is higher than 28 days of daily spending. This means the daily limit will always be reached first.');
                     hasErrors = true;
                 }
             } else if (state.weekly.active && state.monthly.active && !hasErrors) {
                 const maxMonthly = state.weekly.amount * 4;
                 if (state.monthly.amount > maxMonthly) {
-                    showError('monthly',
-                        `Monthly limit ($${state.monthly.amount.toFixed(2)}) is higher than 4 weeks of weekly spending ($${maxMonthly.toFixed(2)}). This means the weekly limit will always be reached first.`);
+                    showError('monthly', 'Monthly limit is higher than 4 weeks of weekly spending. This means the weekly limit will always be reached first.');
                     hasErrors = true;
                 }
             }
@@ -642,9 +672,9 @@
             // Check if current state differs from initial state
             const hasChanges = JSON.stringify(state) !== JSON.stringify(initialState);
 
-            if (hasChanges) {
+            // Only show save button if there are changes and no errors
+            if (hasChanges && !hasErrors) {
                 saveButton.classList.add('visible');
-                saveButton.disabled = hasErrors;
             } else {
                 saveButton.classList.remove('visible');
             }
@@ -683,7 +713,21 @@
             });
 
             localStorage.setItem('spendLimits', JSON.stringify(state));
-            window.location.href = 'index.html';
+            window.location.href = 'index.html?saved=true';
+        }
+
+        function clearAll() {
+            // Reset all limits to inactive
+            Object.keys(state).forEach(type => {
+                state[type].active = false;
+            });
+
+            // Update UI
+            updateUI();
+            clearErrors();
+
+            // Validate to check for changes and show save button if needed
+            validateLimits();
         }
 
         function formatAmountWithCommas(input) {
@@ -710,10 +754,17 @@
                 const input = document.getElementById(`${type}-amount`);
                 if (input) {
                     input.addEventListener('input', function() {
+                        lastEditedField = type;
                         formatAmountWithCommas(this);
                         validateLimits();
                     });
-                    input.addEventListener('change', validateLimits);
+                    input.addEventListener('change', function() {
+                        lastEditedField = type;
+                        validateLimits();
+                    });
+                    input.addEventListener('focus', function() {
+                        lastEditedField = type;
+                    });
                 }
             });
             loadState();
