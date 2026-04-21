@@ -1982,7 +1982,6 @@
 
             // Save initial state for comparison
             initialState = JSON.parse(JSON.stringify(state));
-            updateUI();
             updateBusinessUI();
             updateYouthUI();
         }
@@ -2015,12 +2014,21 @@
                 youthEnableAllToggle.classList.toggle('active', state.youth.enableAll);
             }
 
-            Object.keys(state.youth.transactions).forEach(type => {
-                const toggle = document.getElementById(`${type}-toggle`);
-                if (toggle) {
-                    toggle.classList.toggle('active', state.youth.transactions[type]);
-                }
-            });
+            // Explicitly update each youth transaction toggle
+            const inPersonToggle = document.getElementById('in-person-toggle');
+            if (inPersonToggle) {
+                inPersonToggle.classList.toggle('active', state.youth.transactions['in-person']);
+            }
+
+            const onlineToggle = document.getElementById('online-toggle');
+            if (onlineToggle) {
+                onlineToggle.classList.toggle('active', state.youth.transactions['online']);
+            }
+
+            const atmToggle = document.getElementById('atm-toggle');
+            if (atmToggle) {
+                atmToggle.classList.toggle('active', state.youth.transactions['atm']);
+            }
 
             // Update youth category items
             const youthCategoryItems = document.querySelectorAll('#youth-categories .category-item');
