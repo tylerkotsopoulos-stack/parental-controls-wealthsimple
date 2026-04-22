@@ -453,6 +453,31 @@
             font-weight: 500;
             color: #32302f;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-badge.on {
+            background: #E8F5EA;
+            color: #527E58;
+        }
+
+        .status-badge.off {
+            background: #EFEFEF;
+            color: #32302f;
+        }
+
+        .status-badge.active {
+            background: rgba(169, 188, 229, 0.22);
+            color: #305FAA;
         }
 
         .restricted-banner-description {
@@ -569,7 +594,7 @@
             font-family: 'Wealthsimple Sans', sans-serif;
             font-size: 12px;
             font-weight: 400;
-            color: #999;
+            color: #666;
             line-height: 1.5;
             margin-top: 24px;
         }
@@ -580,11 +605,14 @@
             font-weight: 500;
             color: #32302f;
             margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .bottom-sheet-text {
             font-family: 'Wealthsimple Sans', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 400;
             color: #666;
             line-height: 1.6;
@@ -1179,7 +1207,7 @@
 
             <div class="section" id="youth-categories">
                 <h2 class="section-header">Categories</h2>
-                <p class="section-description">Select the categories you want to restrict.</p>
+                <p class="section-description">Restrict gaming purchases and in-app spending.</p>
 
                 <div class="restriction-card">
                     <div class="restriction-icon">🎮</div>
@@ -1194,8 +1222,11 @@
 
                 <div class="restricted-banner">
                     <div class="restricted-banner-content">
-                        <div class="restricted-banner-title">Restricted categories</div>
-                        <div class="restricted-banner-description">We block underage and age restricted purchases at retailers your youth shouldn't be spending at.</div>
+                        <div class="restricted-banner-title">
+                            Underage restrictions
+                            <span class="status-badge active">Active</span>
+                        </div>
+                        <div class="restricted-banner-description">We automatically block purchases from age-restricted retailers.</div>
                         <button class="learn-more-button" onclick="openBottomSheet()">Learn more</button>
                     </div>
                 </div>
@@ -1350,8 +1381,11 @@
         <div class="bottom-sheet" id="bottom-sheet">
             <div class="bottom-sheet-handle"></div>
             <div class="bottom-sheet-content">
-                <h2 class="bottom-sheet-title">Restricted categories</h2>
-                <p class="bottom-sheet-text">We block purchases from certain age-restricted categories. These restrictions cannot be removed.</p>
+                <h2 class="bottom-sheet-title">
+                    Underage restrictions
+                    <span class="status-badge active">Active</span>
+                </h2>
+                <p class="bottom-sheet-text">We automatically block purchases from age-restricted retailers. These restrictions cannot be removed.</p>
                 <div class="restricted-categories-list">
                     <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
                         <div class="restricted-category-header">

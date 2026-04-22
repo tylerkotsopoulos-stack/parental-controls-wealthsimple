@@ -422,14 +422,21 @@
             }
             setBadgeState('spend-limits-badge', hasActiveLimit);
 
-            // Restrictions - default to ON
+            // Restrictions - default to OFF, only ON if youth has active restrictions
             const restrictionsRaw = localStorage.getItem('restrictions');
-            let hasActiveRestriction = true; // default ON
+            let hasActiveRestriction = false; // default OFF
             if (restrictionsRaw) {
                 const restrictions = JSON.parse(restrictionsRaw);
-                hasActiveRestriction = restrictions.restrictAll ||
-                    (restrictions.transactions && Object.values(restrictions.transactions).some(t => t)) ||
-                    (restrictions.categories && Object.values(restrictions.categories).some(c => c));
+                // Check if any youth transaction restrictions are active
+                const hasYouthTransactionRestriction = restrictions.youth &&
+                    restrictions.youth.transactions &&
+                    Object.values(restrictions.youth.transactions).some(t => t);
+                // Check if gaming category is restricted
+                const hasYouthGamingRestriction = restrictions.youth &&
+                    restrictions.youth.categories &&
+                    restrictions.youth.categories.gaming === true;
+
+                hasActiveRestriction = hasYouthTransactionRestriction || hasYouthGamingRestriction;
             }
             setBadgeState('restrictions-badge', hasActiveRestriction);
 

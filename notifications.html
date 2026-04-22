@@ -355,6 +355,80 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        /* iOS Numeric Keyboard */
+        .ios-keyboard {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #D1D5DB;
+            padding: 8px 8px 0;
+            border-radius: 12px 12px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .ios-keyboard.active {
+            transform: translateY(0);
+        }
+
+        .keyboard-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .keyboard-key {
+            flex: 1;
+            height: 48px;
+            background: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #000;
+            cursor: pointer;
+            font-family: 'Wealthsimple Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        }
+
+        .keyboard-key:active {
+            background: #E5E5EA;
+        }
+
+        .keyboard-key.special {
+            background: #AEB4BD;
+            color: #000;
+            font-size: 18px;
+        }
+
+        .keyboard-key.special:active {
+            background: #959BA5;
+        }
+
+        .keyboard-key.done {
+            background: #007AFF;
+            color: #FFF;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .keyboard-key.done:active {
+            background: #0051D5;
+        }
+
+        .keyboard-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px 0;
+            border-bottom: 1px solid #B8BBC2;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -452,6 +526,38 @@
         </div>
 
         <button class="save-button" id="save-button" onclick="saveNotifications()">Save</button>
+
+        <!-- iOS Numeric Keyboard -->
+        <div class="ios-keyboard" id="ios-keyboard">
+            <div class="keyboard-row">
+                <button class="keyboard-key" onclick="insertNumber('1')">1</button>
+                <button class="keyboard-key" onclick="insertNumber('2')">2</button>
+                <button class="keyboard-key" onclick="insertNumber('3')">3</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="keyboard-key" onclick="insertNumber('4')">4</button>
+                <button class="keyboard-key" onclick="insertNumber('5')">5</button>
+                <button class="keyboard-key" onclick="insertNumber('6')">6</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="keyboard-key" onclick="insertNumber('7')">7</button>
+                <button class="keyboard-key" onclick="insertNumber('8')">8</button>
+                <button class="keyboard-key" onclick="insertNumber('9')">9</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="keyboard-key" onclick="insertNumber('.')">.</button>
+                <button class="keyboard-key" onclick="insertNumber('0')">0</button>
+                <button class="keyboard-key special" onclick="deleteNumber()">
+                    <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
+                        <path d="M8.5 3L2 10L8.5 17H20C21.1 17 22 16.1 22 15V5C22 3.9 21.1 3 20 3H8.5ZM18 14L16 12L14 14L12.5 12.5L14.5 10.5L12.5 8.5L14 7L16 9L18 7L19.5 8.5L17.5 10.5L19.5 12.5L18 14Z" fill="#000"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="keyboard-row">
+                <button class="keyboard-key done" onclick="hideKeyboard()" style="flex: 1;">Done</button>
+            </div>
+        </div>
+
         <div class="home-indicator"></div>
     </div>
 
@@ -582,6 +688,72 @@
         }
 
         loadState();
+
+        // iOS Keyboard functionality
+        let activeInput = null;
+
+        // Show keyboard when input is focused
+        document.addEventListener('DOMContentLoaded', function() {
+            const amountInputs = document.querySelectorAll('input[type="number"]');
+            amountInputs.forEach(input => {
+                input.addEventListener('focus', function(e) {
+                    activeInput = this;
+                    // Show custom keyboard
+                    document.getElementById('ios-keyboard').classList.add('active');
+                });
+            });
+        });
+
+        // Keyboard functions
+        function insertNumber(num) {
+            if (!activeInput) return;
+
+            const currentValue = activeInput.value.replace('$', '').trim();
+
+            // Handle decimal point
+            if (num === '.') {
+                if (currentValue.includes('.')) return; // Only one decimal
+                if (currentValue === '') {
+                    activeInput.value = '0.';
+                } else {
+                    activeInput.value = currentValue + '.';
+                }
+            } else {
+                // Handle numbers
+                if (currentValue === '0' && num !== '.') {
+                    activeInput.value = num;
+                } else {
+                    const newValue = currentValue + num;
+                    // Limit to 2 decimal places
+                    if (newValue.includes('.')) {
+                        const parts = newValue.split('.');
+                        if (parts[1] && parts[1].length > 2) return;
+                    }
+                    activeInput.value = newValue;
+                }
+            }
+
+            // Trigger validation
+            activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        function deleteNumber() {
+            if (!activeInput) return;
+
+            const currentValue = activeInput.value.replace('$', '').trim();
+            if (currentValue.length > 0) {
+                activeInput.value = currentValue.slice(0, -1);
+                activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+
+        function hideKeyboard() {
+            document.getElementById('ios-keyboard').classList.remove('active');
+            if (activeInput) {
+                activeInput.blur();
+                activeInput = null;
+            }
+        }
     </script>
 </body>
 </html>
