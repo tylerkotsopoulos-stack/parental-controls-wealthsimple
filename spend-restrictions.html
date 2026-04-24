@@ -531,8 +531,9 @@
             transform: translateY(100%);
             transition: transform 0.3s ease;
             z-index: 2000;
-            max-height: 700px;
-            overflow-y: auto;
+            max-height: 85%;
+            display: flex;
+            flex-direction: column;
         }
 
         .bottom-sheet.show {
@@ -567,11 +568,13 @@
         }
 
         .bottom-sheet-content {
-            padding: 0 20px 20px;
+            padding: 0 20px;
+            overflow-y: auto;
+            flex: 1;
         }
 
         .bottom-sheet-button {
-            width: 100%;
+            width: calc(100% - 40px);
             min-height: 60px;
             padding: 16px 24px;
             border-radius: 1000px;
@@ -583,7 +586,8 @@
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s;
-            margin-top: 24px;
+            margin: 20px;
+            flex-shrink: 0;
         }
 
         .bottom-sheet-button:active {
@@ -1153,8 +1157,7 @@
                     <path d="M19 12H5M5 12L11 18M5 12L11 6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
-            <h1 class="page-title">Spend restrictions</h1>
-            <p class="page-subtitle">Create custom spend restrictions to prevent certain transactions from being made.</p>
+            <h1 class="page-title">Restricted purchases</h1>
 
             <div class="section-divider"></div>
 
@@ -1210,7 +1213,7 @@
             <div class="section-divider" id="youth-divider"></div>
 
             <div class="section" id="youth-categories">
-                <h2 class="section-header">Additional restrictions</h2>
+                <h2 class="section-header">Categories</h2>
                 <p class="section-description">Restrict gaming purchases and in-app spending.</p>
 
                 <div class="restriction-card">
@@ -1231,11 +1234,10 @@
                 <div class="restricted-banner">
                     <div class="restricted-banner-content">
                         <div class="restricted-banner-title">
-                            Underage restrictions
-                            <span class="status-badge active">Active</span>
+                            Underage categories are restricted by default
                         </div>
-                        <div class="restricted-banner-description">We automatically block purchases from age-restricted retailers.</div>
-                        <button class="learn-more-button" onclick="openBottomSheet()">View restrictions</button>
+                        <div class="restricted-banner-description">Tobacco, alcohol, gambling, and more can't be purchased with this prepaid card.</div>
+                        <button class="learn-more-button" onclick="openBottomSheet()">View all restricted categories</button>
                     </div>
                 </div>
             </div>
@@ -1390,10 +1392,9 @@
             <div class="bottom-sheet-handle"></div>
             <div class="bottom-sheet-content">
                 <h2 class="bottom-sheet-title">
-                    Underage restrictions
-                    <span class="status-badge active">Active</span>
+                    Underage categories are restricted by default
                 </h2>
-                <p class="bottom-sheet-text">We automatically block purchases from age-restricted retailers. These restrictions cannot be removed.</p>
+                <p class="bottom-sheet-text">Tobacco, alcohol, gambling, and more can't be purchased with this prepaid card. These restrictions cannot be removed.</p>
                 <div class="restricted-categories-list">
                     <div class="restricted-category-item" onclick="toggleRestrictedCategory(this)">
                         <div class="restricted-category-header">
@@ -1492,8 +1493,8 @@
                     </div>
                 </div>
                 <p class="bottom-sheet-disclaimer">We try to block all purchases that fall into these categories, but we can't guarantee with 100% accuracy. Merchants may sell inflammatory products that we don't want to block spending at (eg. Gas stations and convenience stores sell everyday items in addition to inflammatory products).</p>
-                <button class="bottom-sheet-button" onclick="closeBottomSheet()">Got it</button>
             </div>
+            <button class="bottom-sheet-button" onclick="closeBottomSheet()">Got it</button>
         </div>
 
         <!-- Search Modal -->
@@ -1955,9 +1956,6 @@
             if (saved) {
                 Object.assign(state, JSON.parse(saved));
             }
-
-            // Always reset gaming to false (off by default)
-            state.youth.categories.gaming = false;
 
             // Initialize business categories state (both on page and in modal)
             const businessCategories = document.querySelectorAll('#business-categories .category-item, #modal-categories-container .category-item');
