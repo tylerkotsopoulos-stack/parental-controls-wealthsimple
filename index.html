@@ -367,23 +367,6 @@
                     </svg>
                 </div>
             </a>
-
-            <a href="international-spending.html" class="menu-item">
-                <div class="menu-icon">
-                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2ZM9.523 13c.09 1.982.438 3.726.934 5.002.29.746.612 1.282.917 1.614.304.331.517.384.626.384.109 0 .322-.053.626-.384.305-.332.627-.868.917-1.614.496-1.276.845-3.02.934-5.002H9.523Zm-5.459 0a8.005 8.005 0 0 0 4.8 6.36 10.14 10.14 0 0 1-.271-.633C7.994 17.187 7.61 15.189 7.52 13H4.064Zm12.416 0c-.09 2.189-.474 4.187-1.073 5.727-.085.218-.175.43-.271.633a8.004 8.004 0 0 0 4.8-6.36H16.48ZM8.863 4.639A8.006 8.006 0 0 0 4.064 11h3.457c.09-2.189.473-4.187 1.072-5.727.085-.218.174-.43.27-.634ZM12 4c-.109 0-.322.053-.626.384-.305.332-.627.868-.917 1.614-.496 1.276-.844 3.02-.934 5.002h4.954c-.09-1.982-.438-3.726-.934-5.002-.29-.746-.612-1.282-.917-1.614C12.322 4.053 12.109 4 12 4Zm3.136.639c.096.204.186.416.271.634.599 1.54.982 3.538 1.073 5.727h3.456a8.005 8.005 0 0 0-4.8-6.361Z" fill="#32302f"/>
-                    </svg>
-                </div>
-                <div class="menu-content">
-                    <div class="menu-label">International spending</div>
-                </div>
-                <div class="menu-right">
-                    <span class="status-badge off" id="international-badge">Off</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 18l6-6-6-6" stroke="#32302f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </a>
         </div>
 
         <div class="home-indicator"></div>
@@ -439,15 +422,6 @@
                 hasActiveRestriction = hasYouthTransactionRestriction || hasYouthGamingRestriction;
             }
             setBadgeState('restrictions-badge', hasActiveRestriction);
-
-            // International
-            const internationalRaw = localStorage.getItem('international');
-            let hasActiveInternational = false;
-            if (internationalRaw) {
-                const international = JSON.parse(internationalRaw);
-                hasActiveInternational = international.active;
-            }
-            setBadgeState('international-badge', hasActiveInternational);
         }
 
         updateBadges();
